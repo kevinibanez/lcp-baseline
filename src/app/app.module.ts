@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { ComponentsModule } from './components/components.module';
 import { MaterialsModule } from './modules/materialIo.module';
 import { AppComponent } from './app.component';
+
+
 
 // ---------------------------------------------------------------------------
 // -----------------------   PIPES | SERVICES  -------------------------------
@@ -32,7 +36,13 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     FormsModule, ReactiveFormsModule,
     MaterialsModule,
-    ComponentsModule
+    ComponentsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
